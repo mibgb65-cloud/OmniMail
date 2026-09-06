@@ -45,7 +45,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
-      - run: npx wrangler deploy --dry-run
+      - run: npm run deploy -- --dry-run
       - name: Publish Web GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}

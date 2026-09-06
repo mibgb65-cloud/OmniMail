@@ -178,11 +178,12 @@ export function SetupPage({
             <>
               <p>{t('请在 Worker 中补齐缺少的绑定或变量，重新部署后刷新此页面。检查结果不会包含 Secret 的实际内容。')}</p>
               <button
-                className="setup-check-refresh"
+                className="button button--secondary setup-check-refresh"
                 type="button"
                 onClick={() => window.location.reload()}
               >
-                <RefreshCw size={13} />{t('重新检查')}
+                <RefreshCw aria-hidden="true" size={15} />
+                <span>{t('重新检查')}</span>
               </button>
             </>
           )}

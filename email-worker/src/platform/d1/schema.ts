@@ -22,7 +22,7 @@ function appliedMigration(db: D1Database, name: string) {
 function migrationError(cause?: unknown, migration = REQUIRED_MIGRATION): Error {
   const detail = cause instanceof Error && cause.message ? ` ${cause.message}` : ''
   return new Error(
-    `D1 数据库迁移未完成，请在部署前运行 npm run db:migrate。`
+    `D1 数据库迁移未完成，请运行 npm run deploy 完成数据库初始化和部署（单独运行 npx wrangler deploy 不会执行迁移）。`
       + ` 缺少迁移：${migration}。${detail}`,
   )
 }

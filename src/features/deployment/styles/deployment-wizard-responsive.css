@@ -50,14 +50,6 @@
 }
 
 @media (max-width: 470px) {
-  .setup-card {
-    padding-inline: 24px;
-  }
-
-  .setup-readiness ul {
-    grid-template-columns: 1fr;
-  }
-
   .deployment-dialog__symbol {
     width: 42px;
     height: 42px;

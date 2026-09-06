@@ -31,4 +31,4 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:extension
       - run: npm run test:e2e
-      - run: npx wrangler deploy --dry-run
+      - run: npm run deploy -- --dry-run

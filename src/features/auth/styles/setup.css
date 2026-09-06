@@ -1,0 +1,142 @@
+/* 首次设置页会在部署向导代码加载前显示，因此这些样式必须随认证页面一起加载。 */
+.setup-card {
+  width: min(560px, 100%);
+  margin-top: clamp(30px, 6vh, 68px);
+}
+
+.setup-readiness {
+  margin: -4px 0 22px;
+  padding: 13px;
+  border: 1px solid color-mix(in srgb, var(--warning) 28%, var(--line));
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--warning-soft) 48%, var(--surface));
+}
+
+.setup-readiness.is-ready {
+  border-color: color-mix(in srgb, var(--success) 28%, var(--line));
+  background: color-mix(in srgb, var(--success-soft) 48%, var(--surface));
+}
+
+.setup-readiness > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.setup-readiness > header > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.setup-readiness > header > strong {
+  color: var(--warning);
+  font-size: 10px;
+}
+
+.setup-readiness.is-ready > header > strong {
+  color: var(--success);
+}
+
+.setup-readiness ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.setup-readiness li {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  color: var(--warning);
+  font-size: 11px;
+}
+
+.setup-readiness li.is-ready {
+  color: var(--success);
+}
+
+.setup-readiness li span {
+  overflow: hidden;
+  color: var(--text);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.setup-readiness li small {
+  color: currentColor;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.setup-readiness > p {
+  margin: 11px 1px 0;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.setup-check-refresh {
+  min-height: 40px;
+  margin-top: 11px;
+  padding-inline: 15px;
+  border-color: color-mix(in srgb, var(--warning) 24%, var(--line));
+  background: color-mix(in srgb, var(--warning-soft) 18%, var(--surface));
+  color: var(--text-secondary);
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--warning) 8%, transparent);
+  font-size: 12px;
+  touch-action: manipulation;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.setup-check-refresh:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--warning) 44%, var(--line));
+  background: color-mix(in srgb, var(--warning-soft) 35%, var(--surface));
+  color: var(--text);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--warning) 13%, transparent);
+  transform: translateY(-1px);
+}
+
+.setup-check-refresh:active:not(:disabled) {
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--warning) 8%, transparent);
+  transform: translateY(0);
+}
+
+.setup-check-refresh svg {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 470px) {
+  .setup-card {
+    padding-inline: 24px;
+  }
+
+  .setup-readiness ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .setup-check-refresh {
+    transition: none;
+  }
+}

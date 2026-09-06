@@ -1,6 +1,6 @@
 {
   "name": "omnimail",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "description": "A small, self-hosted webmail deployed as one Cloudflare Worker with Static Assets, D1, R2, Queues, and Resend.",
@@ -43,8 +43,7 @@
     "db:bootstrap:local": "wrangler d1 execute DB --local --file scripts/bootstrap-legacy-d1.sql",
     "db:migrate": "node scripts/apply-d1-migrations.mjs --remote",
     "db:migrate:local": "node scripts/apply-d1-migrations.mjs --local",
-    "predeploy": "npm run db:migrate",
-    "deploy": "wrangler deploy",
+    "deploy": "node scripts/deploy.mjs",
     "check:lines": "node scripts/check-file-lines.mjs",
     "lint": "oxlint src extension/src",
     "docs:api": "node scripts/generate-api-docs.mjs",

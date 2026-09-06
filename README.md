@@ -384,8 +384,23 @@ Import a repository**，选择你的 OmniMail 仓库：
 [`wrangler.jsonc`](./wrangler.jsonc) 完成两件事：
 
 1. `npm run build` 将 React 前端生成到 `dist/`。
-2. `npm run deploy` 先应用尚未执行的 D1 迁移，再由 Wrangler 将 `dist/`、Worker
-   API、D1、R2、Queue、Workflow 和定时任务作为同一个 Worker 版本发布。
+2. `npm run deploy` 检查并应用尚未执行的 D1 迁移，再由 Wrangler 将 `dist/`、Worker
+   API、D1、R2、Queue、Workflow 和定时任务作为同一个 Worker 版本发布。如果首次部署
+   的 D1 尚未创建，则先发布 Worker 以自动创建并绑定资源，再初始化数据库并校验迁移记录。
+   在此首次初始化完成前，API 可能短暂提示数据库迁移未完成。
+
+部署命令请使用 **`npm run deploy`**。单独运行 `npx wrangler deploy` 只发布 Worker，
+不会调用本项目的迁移脚本；如果网站已提示“D1 数据库迁移未完成”，把 Workers Builds
+的 Deploy command 改为 `npm run deploy` 后重新部署即可。本地发布需先运行 `npm run build`。
+
+部署脚本对网络中断、限流、Cloudflare 服务临时故障最多尝试 **5 次**，间隔为
+2、4、8、16 秒并附加随机延迟。迁移失败后会重新读取迁移记录，再决定需要执行哪些
+SQL；远端已经成功但响应丢失时，不会重复执行已记录的迁移。权限、配置或 SQL 错误会
+显示具体原因并停止；例如构建 API Token 需要具备相应账户的 **D1 编辑权限**。
+首次资源创建成功但迁移失败时，修复原因后重新运行同一命令可继续完成部署。
+
+`npm run deploy -- --dry-run` 只做打包预检，不执行远程数据库迁移或创建资源。
+使用命名环境时，`npm run deploy -- --env staging` 会将环境同时传给迁移和发布步骤。
 
 `/api/*` 优先交给 Worker 脚本，其余路径由 Static Assets 提供；未匹配的浏览器
 导航会回退到 `index.html`，因此 React SPA 刷新不会出现 404。
@@ -790,7 +805,7 @@ npm run build:extension
 npm run test:extension
 npm run test:e2e
 npm run build
-npx wrangler deploy --dry-run
+npm run deploy -- --dry-run
 ```
 
 `npm run test:extension` 的截图只写入 `test-results/`。需要主动更新 Chrome
